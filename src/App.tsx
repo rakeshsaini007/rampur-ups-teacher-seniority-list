@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
+  CheckCircle2,
   Download,
   FileDown,
   FileSpreadsheet,
+  ListOrdered,
   RefreshCw,
   Search,
   Upload,
+  UserX,
 } from 'lucide-react';
 import { AppsScriptGuide } from './components/AppsScriptGuide';
 import { SeniorityTable } from './components/SeniorityTable';
@@ -293,13 +296,13 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
       {/* Top Bar Contract: 3 zones separated by gap-8 */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 no-print">
-        <div className="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
+      <header className="bg-white border-b border-slate-200 md:sticky md:top-0 z-30 no-print">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 h-14 md:h-16 flex items-center justify-between gap-4 md:gap-8">
           {/* Zone 1: Single-element wordmark */}
           <button
             type="button"
             onClick={() => setActiveTab('seniority')}
-            className="text-base sm:text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap shrink-0 text-left font-display"
+            className="text-base sm:text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap truncate text-left font-display"
           >
             Rampur Seniority Register
           </button>
@@ -343,7 +346,7 @@ export default function App() {
                 type="button"
                 disabled={loading}
                 onClick={() => fetchFromAppsScript(activeUrl)}
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-md transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[40px] md:min-h-0 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-md transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
               >
                 <RefreshCw
                   className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`}
@@ -355,53 +358,16 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setActiveTab('setup')}
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-md transition-colors whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 min-h-[40px] md:min-h-0 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-md transition-colors whitespace-nowrap shrink-0"
               >
                 Connect Apps Script
               </button>
             )}
           </div>
         </div>
-
-        {/* Mobile Nav Row */}
-        <div className="md:hidden border-t border-slate-100 px-6 py-2 flex items-center gap-4 overflow-x-auto text-xs font-medium">
-          <button
-            type="button"
-            onClick={() => setActiveTab('seniority')}
-            className={`whitespace-nowrap shrink-0 ${
-              activeTab === 'seniority'
-                ? 'text-[#1E3A8A] font-semibold'
-                : 'text-slate-600'
-            }`}
-          >
-            Seniority List
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('excluded')}
-            className={`whitespace-nowrap shrink-0 ${
-              activeTab === 'excluded'
-                ? 'text-[#1E3A8A] font-semibold'
-                : 'text-slate-600'
-            }`}
-          >
-            Excluded Audit
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('setup')}
-            className={`whitespace-nowrap shrink-0 ${
-              activeTab === 'setup'
-                ? 'text-[#1E3A8A] font-semibold'
-                : 'text-slate-600'
-            }`}
-          >
-            Apps Script Setup
-          </button>
-        </div>
       </header>
 
-      <main className="flex-1 max-w-[1440px] w-full mx-auto px-6 py-6 space-y-6">
+      <main className="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-20 md:pb-6 space-y-4 sm:space-y-6">
         {/* Print-only Header */}
         <div className="hidden print-only mb-4 border-b border-slate-300 pb-3">
           <h1 className="text-lg font-bold text-slate-900">
@@ -419,14 +385,14 @@ export default function App() {
         </div>
 
         {/* Page Context & Criteria Summary */}
-        <section className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 no-print">
+        <section className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               {seniorityMode === 'ups-tet'
                 ? 'UPS TET Passed Teachers Seniority List'
                 : 'All Teachers Seniority List (Without UPS TET Criteria)'}
             </h1>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-xs sm:text-sm text-slate-600">
               District Rampur ·{' '}
               {seniorityMode === 'ups-tet'
                 ? 'Filtered strictly to UPS TET passed candidates'
@@ -538,10 +504,10 @@ export default function App() {
           /* Populated Data Workspace */
           <div className="space-y-5">
             {/* Flat Structured Stat Strip */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 bg-white border border-slate-200 rounded-lg divide-y lg:divide-y-0 lg:divide-x divide-slate-200 no-print">
-              <div className="p-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200 rounded-lg overflow-hidden no-print">
+              <div className="p-3.5 sm:p-4 bg-white">
                 <p className="text-xs text-slate-500">Total Sheet Records</p>
-                <p className="mt-1 text-2xl font-bold font-mono text-slate-900">
+                <p className="mt-1 text-xl sm:text-2xl font-bold font-mono text-slate-900">
                   <button
                     type="button"
                     onClick={() => {
@@ -550,7 +516,7 @@ export default function App() {
                       setRemarksFilter('all');
                     }}
                     title="View all sheet records"
-                    className={`inline-flex items-baseline gap-1.5 rounded px-1 -mx-1 py-0.5 transition-colors hover:bg-slate-100 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A]/40 cursor-pointer ${
+                    className={`inline-flex items-baseline gap-1.5 rounded px-1 -mx-1 py-0.5 min-h-[36px] sm:min-h-0 transition-colors hover:bg-slate-100 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A]/40 cursor-pointer ${
                       activeTab === 'seniority' &&
                       seniorityMode === 'all-teachers' &&
                       remarksFilter === 'all'
@@ -562,9 +528,9 @@ export default function App() {
                   </button>
                 </p>
               </div>
-              <div className="p-4">
+              <div className="p-3.5 sm:p-4 bg-white">
                 <p className="text-xs text-slate-500">UPS TET Passed (Eligible)</p>
-                <p className="mt-1 text-2xl font-bold font-mono text-emerald-700">
+                <p className="mt-1 text-xl sm:text-2xl font-bold font-mono text-emerald-700">
                   <button
                     type="button"
                     onClick={() => {
@@ -573,7 +539,7 @@ export default function App() {
                       setRemarksFilter('all');
                     }}
                     title="View UPS TET passed seniority list"
-                    className={`inline-flex items-baseline gap-1.5 rounded px-1 -mx-1 py-0.5 transition-colors hover:bg-emerald-50 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 cursor-pointer ${
+                    className={`inline-flex items-baseline gap-1.5 rounded px-1 -mx-1 py-0.5 min-h-[36px] sm:min-h-0 transition-colors hover:bg-emerald-50 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40 cursor-pointer ${
                       activeTab === 'seniority' &&
                       seniorityMode === 'ups-tet' &&
                       remarksFilter === 'all'
@@ -585,9 +551,9 @@ export default function App() {
                   </button>
                 </p>
               </div>
-              <div className="p-4">
+              <div className="p-3.5 sm:p-4 bg-white">
                 <p className="text-xs text-slate-500">Excluded (No UPS TET)</p>
-                <p className="mt-1 text-2xl font-bold font-mono text-slate-700">
+                <p className="mt-1 text-xl sm:text-2xl font-bold font-mono text-slate-700">
                   <button
                     type="button"
                     onClick={() => {
@@ -595,7 +561,7 @@ export default function App() {
                       setRemarksFilter('all');
                     }}
                     title="View excluded candidates list"
-                    className={`inline-flex items-baseline gap-1.5 rounded px-1 -mx-1 py-0.5 transition-colors hover:bg-slate-100 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A]/40 cursor-pointer ${
+                    className={`inline-flex items-baseline gap-1.5 rounded px-1 -mx-1 py-0.5 min-h-[36px] sm:min-h-0 transition-colors hover:bg-slate-100 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3A8A]/40 cursor-pointer ${
                       activeTab === 'excluded'
                         ? 'underline decoration-2 underline-offset-4'
                         : ''
@@ -605,11 +571,11 @@ export default function App() {
                   </button>
                 </p>
               </div>
-              <div className="p-4">
+              <div className="p-3.5 sm:p-4 bg-white">
                 <p className="text-xs text-slate-500">
                   Disciplinary / Date Flags
                 </p>
-                <p className="mt-1 text-2xl font-bold font-mono text-amber-700">
+                <p className="mt-1 text-xl sm:text-2xl font-bold font-mono text-amber-700">
                   {actualUniqueFlaggedCount}
                 </p>
                 <p className="mt-0.5 text-[11px] text-slate-500 font-mono">
@@ -622,7 +588,7 @@ export default function App() {
                         );
                       }
                     }}
-                    className={`hover:text-slate-900 ${
+                    className={`py-1 sm:py-0 hover:text-slate-900 ${
                       activeTab === 'seniority' ? 'underline cursor-pointer' : ''
                     }`}
                   >
@@ -638,7 +604,7 @@ export default function App() {
                         );
                       }
                     }}
-                    className={`hover:text-amber-800 ${
+                    className={`py-1 sm:py-0 hover:text-amber-800 ${
                       remarksFilter === 'date-warnings'
                         ? 'text-amber-800 font-semibold underline'
                         : activeTab === 'seniority'
@@ -653,11 +619,11 @@ export default function App() {
             </div>
 
             {/* Workspace Toolbar: Search, Filters & Actions */}
-            <div className="bg-white border border-slate-200 rounded-lg p-4 space-y-3 no-print">
+            <div className="bg-white border border-slate-200 rounded-lg p-3.5 sm:p-4 space-y-3 no-print">
               <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
                 {/* Filter Inputs */}
-                <div className="flex flex-wrap items-center gap-2.5 flex-1">
-                  <div className="relative flex-1 min-w-[220px] max-w-sm">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2.5 flex-1">
+                  <div className="relative w-full sm:flex-1 sm:min-w-[220px] sm:max-w-sm">
                     <Search
                       className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
                       aria-hidden="true"
@@ -667,46 +633,48 @@ export default function App() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search name, EHRMS code, school..."
-                      className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
+                      className="w-full min-h-[44px] md:min-h-0 pl-9 pr-3 py-2 text-sm md:text-xs bg-slate-50 border border-slate-300 rounded-md focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
                     />
                   </div>
 
-                  <select
-                    aria-label="Filter by Block"
-                    value={blockFilter}
-                    onChange={(e) => setBlockFilter(e.target.value)}
-                    className="px-3 py-2 text-xs bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
-                  >
-                    <option value="all">All Blocks</option>
-                    {data.blocks.map((b) => (
-                      <option key={b} value={b}>
-                        {b}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="grid grid-cols-2 sm:flex items-center gap-2.5">
+                    <select
+                      aria-label="Filter by Block"
+                      value={blockFilter}
+                      onChange={(e) => setBlockFilter(e.target.value)}
+                      className="w-full sm:w-auto min-h-[44px] md:min-h-0 px-3 py-2 text-sm md:text-xs bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
+                    >
+                      <option value="all">All Blocks</option>
+                      {data.blocks.map((b) => (
+                        <option key={b} value={b}>
+                          {b}
+                        </option>
+                      ))}
+                    </select>
 
-                  <select
-                    aria-label="Filter by Designation"
-                    value={designationFilter}
-                    onChange={(e) => setDesignationFilter(e.target.value)}
-                    className="px-3 py-2 text-xs bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
-                  >
-                    <option value="all">All Designations</option>
-                    {data.designations.map((d) => (
-                      <option key={d} value={d}>
-                        {d}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      aria-label="Filter by Designation"
+                      value={designationFilter}
+                      onChange={(e) => setDesignationFilter(e.target.value)}
+                      className="w-full sm:w-auto min-h-[44px] md:min-h-0 px-3 py-2 text-sm md:text-xs bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1E3A8A]/20 focus:border-[#1E3A8A]"
+                    >
+                      <option value="all">All Designations</option>
+                      {data.designations.map((d) => (
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 {/* Export Actions */}
-                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 shrink-0">
                   <button
                     type="button"
                     disabled={!activeDisplayedRecords.length}
                     onClick={handleExportPdf}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-md transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-1.5 min-h-[44px] md:min-h-0 px-3 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-md transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
                   >
                     <FileDown className="w-3.5 h-3.5" aria-hidden="true" />
                     Export PDF
@@ -715,7 +683,7 @@ export default function App() {
                     type="button"
                     disabled={!activeDisplayedRecords.length}
                     onClick={handleExportCsv}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-md transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-1.5 min-h-[44px] md:min-h-0 px-3.5 py-2 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-md transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
                   >
                     <Download className="w-3.5 h-3.5" aria-hidden="true" />
                     Export CSV
@@ -764,6 +732,55 @@ export default function App() {
         record={selectedRecord}
         onClose={() => setSelectedRecord(null)}
       />
+
+      {/* Mobile Fixed Bottom Tab Bar */}
+      <nav
+        aria-label="Mobile view navigation"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 grid grid-cols-3 h-14 no-print"
+      >
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab('seniority');
+            setSeniorityMode('ups-tet');
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors whitespace-nowrap ${
+            activeTab === 'seniority' && seniorityMode === 'ups-tet'
+              ? 'text-[#1E3A8A] font-semibold'
+              : 'text-slate-500'
+          }`}
+        >
+          <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
+          <span>With UPS TET</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab('seniority');
+            setSeniorityMode('all-teachers');
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors whitespace-nowrap ${
+            activeTab === 'seniority' && seniorityMode === 'all-teachers'
+              ? 'text-[#1E3A8A] font-semibold'
+              : 'text-slate-500'
+          }`}
+        >
+          <ListOrdered className="w-5 h-5" aria-hidden="true" />
+          <span>Without UPS TET</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('excluded')}
+          className={`flex flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors whitespace-nowrap ${
+            activeTab === 'excluded'
+              ? 'text-[#1E3A8A] font-semibold'
+              : 'text-slate-500'
+          }`}
+        >
+          <UserX className="w-5 h-5" aria-hidden="true" />
+          <span>Excluded</span>
+        </button>
+      </nav>
     </div>
   );
 }
