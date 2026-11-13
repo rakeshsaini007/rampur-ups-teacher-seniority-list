@@ -1,0 +1,6 @@
+{
+  "name": "Rampur Teacher Seniority List",
+  "description": "Seniority list generator for UPS TET passed teachers in Rampur sorted by First Joining Date in Rampur and Date of Birth via Google Apps Script.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
